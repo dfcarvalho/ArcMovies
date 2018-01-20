@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Created by dfcarvalho on 15/01/18.
  */
-class Movie(
+data class Movie(
         val id: Long,
         val title: String,
         val overview: String?,
