@@ -154,7 +154,11 @@ class RegionSettingsPickerDialogFragment : DialogFragment(), IRegionSettingsView
     }
 
     override fun onCountriesListError(error: Throwable) {
-        selectedCountry = null
+        // create list with only the currently selected country
+        val countryCode = preferencesProvider.getCountry()
+        val country = Country(abbr = countryCode, name = countryCode)
+        selectedCountry = country
+        onCountriesListReady(listOf(country))
     }
 
     override fun onLanguagesListReady(languages: List<Language>) {
@@ -178,21 +182,30 @@ class RegionSettingsPickerDialogFragment : DialogFragment(), IRegionSettingsView
     }
 
     override fun onLanguagesListError(error: Throwable) {
-        selectedLanguage = null
+        // create list with only the currently selected country
+        val languageCode = preferencesProvider.getLanguage()
+        val language = Language(
+            code = languageCode,
+            name = "",
+            englishName = languageCode,
+            translationCode = languageCode
+        )
+        selectedLanguage = language
+        onLanguagesListReady(listOf(language))
     }
 
     override fun onSetSettingsSuccess() {
-        listener?.onSettingsChanged(selectedCountry!!, selectedLanguage!!)
+        listener?.onRegionSettingsChanged(selectedCountry!!, selectedLanguage!!)
         dismiss()
     }
 
     override fun onSetSettingsFailed(noCountry: Boolean, noLanguage: Boolean) {
         if (noCountry) {
-            // make spinner red
+            // TODO: make spinner red
         }
 
         if (noLanguage) {
-            // make spinner red
+            // TODO: make spinner red
         }
     }
 
@@ -203,6 +216,6 @@ class RegionSettingsPickerDialogFragment : DialogFragment(), IRegionSettingsView
     }
 
     interface Listener {
-        fun onSettingsChanged(country: Country, language: Language)
+        fun onRegionSettingsChanged(country: Country, language: Language)
     }
 }

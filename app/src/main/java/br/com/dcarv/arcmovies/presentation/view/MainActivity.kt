@@ -160,11 +160,13 @@ class MainActivity : AppCompatActivity(), IMainView,
             }
         })
 
-        if (presenter.movies.isEmpty()) presenter.getUpcomingMoviesList()
+        if (presenter.movies.isEmpty()) {
+            presenter.getUpcomingMoviesList()
+            changeStatus(ViewStatus.LOADING)
+        }
 
         btnTryAgain.setOnClickListener {
-            showErrorMsg(false)
-            showProgress(true)
+            changeStatus(ViewStatus.LOADING)
             presenter.getUpcomingMoviesList(shouldReset = true)
         }
     }
@@ -205,9 +207,6 @@ class MainActivity : AppCompatActivity(), IMainView,
             "Loaded page " + upcomingMoviesList.page + " with " + upcomingMoviesList.results.size + " movies. Reset = $reset"
         )
 
-        showProgress(false)
-        showErrorMsg(false)
-
         if (reset) {
             adapter.reset(upcomingMoviesList)
         } else {
@@ -215,18 +214,14 @@ class MainActivity : AppCompatActivity(), IMainView,
         }
 
         if (presenter.movies.isEmpty()) {
-            showEmptyView(true)
-            showList(false)
+            changeStatus(ViewStatus.EMPTY)
         } else {
-            showEmptyView(false)
-            showList(true)
+            changeStatus(ViewStatus.MOVIES)
         }
     }
 
     override fun onUpcomingMoviesListError(page: Long, error: Throwable) {
-        // TODO:
-        showErrorMsg(true)
-        showList(false)
+        changeStatus(ViewStatus.ERROR)
         adapter.onLoadingError()
         Log.e("MainActivity", "Failed to load upcoming movies list", error)
     }
@@ -246,10 +241,9 @@ class MainActivity : AppCompatActivity(), IMainView,
             .show(supportFragmentManager, "RegionSettingsPickerDialogFragment")
     }
 
-    override fun onSettingsChanged(country: Country, language: Language) {
+    override fun onRegionSettingsChanged(country: Country, language: Language) {
         if (presenter.region != country.abbr || (presenter.language != language.translationCode && presenter.language != language.code)) {
-            showProgress(true)
-            showList(false)
+            changeStatus(ViewStatus.LOADING)
 
             presenter.region = country.abbr
             presenter.language = language.translationCode ?: language.code
@@ -257,20 +251,40 @@ class MainActivity : AppCompatActivity(), IMainView,
         }
     }
 
-    private fun showList(show: Boolean) {
-        rvMovies.show(show)
+    private enum class ViewStatus {
+        MOVIES,
+        LOADING,
+        ERROR,
+        EMPTY
     }
 
-    private fun showProgress(show: Boolean) {
-        layoutProgress.show(show)
-    }
-
-    private fun showEmptyView(show: Boolean) {
-        tvEmpty.show(show)
-    }
-
-    private fun showErrorMsg(show: Boolean) {
-        layoutProgress.show(show)
+    private fun changeStatus(status: ViewStatus) {
+        when (status) {
+            MainActivity.ViewStatus.MOVIES -> {
+                rvMovies.show(true)
+                layoutProgress.show(false)
+                layoutError.show(false)
+                tvEmpty.show(false)
+            }
+            MainActivity.ViewStatus.LOADING -> {
+                rvMovies.show(false)
+                layoutProgress.show(true)
+                layoutError.show(false)
+                tvEmpty.show(false)
+            }
+            MainActivity.ViewStatus.ERROR -> {
+                rvMovies.show(false)
+                layoutProgress.show(false)
+                layoutError.show(true)
+                tvEmpty.show(false)
+            }
+            MainActivity.ViewStatus.EMPTY -> {
+                rvMovies.show(false)
+                layoutProgress.show(false)
+                layoutError.show(false)
+                tvEmpty.show(true)
+            }
+        }
     }
 
     companion object {
