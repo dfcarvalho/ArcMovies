@@ -7,7 +7,9 @@ import br.com.dcarv.arcmovies.domain.model.Genre
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * An IGenreProvider that returns genres from the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 class TMDBGenreProvider(
         private val apiKey: String,

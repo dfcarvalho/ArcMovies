@@ -1,7 +1,9 @@
 package br.com.dcarv.arcmovies.domain.model
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Represents genres in the app
+ *
+ * @author Danilo Carvalho
  */
 data class Genre(
         val id: Long,

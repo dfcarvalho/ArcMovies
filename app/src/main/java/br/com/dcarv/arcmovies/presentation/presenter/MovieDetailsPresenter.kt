@@ -6,14 +6,17 @@ import br.com.dcarv.arcmovies.presentation.view.IMovieDetailsView
 import br.com.dcarv.arcmovies.presentation.view.IView
 
 /**
- * Created by dfcarvalho on 17/01/18.
+ * An implementation of IMovieDetailsPresenter for Android
+ *
+ * @author Danilo Carvalho
  */
 class MovieDetailsPresenter(
         provider: IMovieDetailsProvider,
-        private val movieId: Long
+        private val movieId: Long,
+        language: String = "pt-BR"
 ) : IMovieDetailsPresenter {
     private var view: IMovieDetailsView? = null
-    private val getMovieDetailsUseCase = GetMovieDetailsUseCase(provider, movieId)
+    private val getMovieDetailsUseCase = GetMovieDetailsUseCase(provider, movieId, language = language)
 
     override fun getMovieDetails() {
         disposeObservable()

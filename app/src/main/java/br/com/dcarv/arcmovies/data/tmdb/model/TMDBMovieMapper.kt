@@ -10,7 +10,10 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Maps {@link br.com.dcarv.arcmovies.data.tmdb.model.TMDBMovie} to
+ * {@link br.com.dcarv.arcmovies.domain.model.Movie}
+ *
+ * @author Danilo Carvalho
  */
 object TMDBMovieMapper : IMovieDetailsMapper<TMDBMovie> {
     @SuppressLint("SimpleDateFormat")

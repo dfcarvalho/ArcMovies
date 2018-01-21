@@ -2,7 +2,9 @@ package br.com.dcarv.arcmovies.domain.model
 
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Represents upcoming movies lists in the app
+ *
+ * @author Danilo Carvalho
  */
 data class UpcomingMoviesList(
         val page: Long,

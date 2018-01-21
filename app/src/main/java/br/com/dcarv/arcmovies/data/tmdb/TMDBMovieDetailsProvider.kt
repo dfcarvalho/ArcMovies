@@ -7,7 +7,9 @@ import br.com.dcarv.arcmovies.domain.model.Movie
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * An IMovieDetailsProvider that returns movies details from the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 class TMDBMovieDetailsProvider(
         private val apiKey: String,

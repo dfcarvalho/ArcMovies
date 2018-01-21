@@ -2,12 +2,15 @@ package br.com.dcarv.arcmovies.presentation.view
 
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import br.com.dcarv.arcmovies.BuildConfig
 import br.com.dcarv.arcmovies.R
 import br.com.dcarv.arcmovies.TMDB_API_KEY
 import br.com.dcarv.arcmovies.TMDB_URL
+import br.com.dcarv.arcmovies.data.prefs.SharedPreferencesProvider
 import br.com.dcarv.arcmovies.data.tmdb.TMDBMovieDetailsProvider
 import br.com.dcarv.arcmovies.data.tmdb.TMDBService
 import br.com.dcarv.arcmovies.data.tmdb.model.TMDBMovieMapper
@@ -27,6 +30,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 
+/**
+ * An implementation of IMovieDetailsActivity for Android.
+ * Shows the details for a movie.
+ *
+ * @author Danilo Carvalho
+ */
 class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
     private lateinit var service: TMDBService
     private lateinit var presenter: IMovieDetailsPresenter
@@ -54,22 +63,29 @@ class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
         loadPosterImage(moviePosterUrl, true)
 
         // TODO: use Dependency Injection to inject these dependencies instead
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client = OkHttpClient.Builder()
+        val client = if (BuildConfig.DEBUG) {
+            // retrofit logging
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build()
-
+        } else {
+            OkHttpClient.Builder().build()
+        }
         val retrofit = Retrofit.Builder()
-                .baseUrl(TMDB_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
+            .baseUrl(TMDB_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
         service = retrofit.create(TMDBService::class.java)
         moviesProvider = TMDBMovieDetailsProvider(TMDB_API_KEY, service, mapper = TMDBMovieMapper)
+        val language = SharedPreferencesProvider(this.applicationContext).getLanguage()
 
-        presenter = lastCustomNonConfigurationInstance as? IMovieDetailsPresenter ?: MovieDetailsPresenter(moviesProvider, movieId)
+        presenter = lastCustomNonConfigurationInstance as? IMovieDetailsPresenter ?:
+                MovieDetailsPresenter(moviesProvider, movieId, language = language)
         presenter.attachView(this as IView)
 
         presenter.getMovieDetails()
@@ -83,7 +99,7 @@ class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
     override fun onMovieDetailsReady(movie: Movie) {
         tvTitle.text = movie.title
         tvOverview.text = if (movie.overview.isNullOrBlank()) {
-            getString(R.string.no_overview)
+            getString(R.string.label_no_overview)
         } else {
             movie.overview
         }
@@ -107,33 +123,36 @@ class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
 
         if (movie.backdropPath != null) {
             Picasso.with(this)
-                    .load(movie.backdropPath)
-                    .resize(imgBackdrop.width, 0)
-                    .transform(CropTransformation(
-                            imgBackdrop.width,
-                            imgBackdrop.height,
-                            CropTransformation.GravityHorizontal.CENTER,
-                            CropTransformation.GravityVertical.TOP)
+                .load(movie.backdropPath)
+                .resize(imgBackdrop.width, 0)
+                .transform(
+                    CropTransformation(
+                        imgBackdrop.width,
+                        imgBackdrop.height,
+                        CropTransformation.GravityHorizontal.CENTER,
+                        CropTransformation.GravityVertical.TOP
                     )
-                    .transform(VignetteTransformation(VignetteTransformation.TYPE.BOTTOM))
-                    .into(imgBackdrop, object : Callback {
-                        override fun onSuccess() {
-                            // do nothing
-                            Log.d("T", "M")
-                        }
+                )
+                .transform(VignetteTransformation(VignetteTransformation.TYPE.BOTTOM))
+                .into(imgBackdrop, object : Callback {
+                    override fun onSuccess() {
+                        // do nothing
+                        Log.d(TAG, "Image loaded")
+                    }
 
-                        override fun onError() {
-                            hideCollapsingToolbar()
-                        }
+                    override fun onError() {
+                        hideCollapsingToolbar()
+                    }
 
-                    })
+                })
         } else {
             hideCollapsingToolbar()
         }
     }
 
     override fun onMovieDetailsError(movieId: Long, error: Throwable) {
-        Log.e("T", "Failed to load movie details: " + movieId, error)
+        Log.e(TAG, "Failed to load movie details: " + movieId, error)
+        tvTitle.text = getString(R.string.error_failed_movie_details)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any {
@@ -142,27 +161,27 @@ class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
 
     private fun loadPosterImage(posterUrl: String?, startEnterTransition: Boolean = true) {
         Picasso.with(this)
-                .load(posterUrl)
-                .noFade()
-                .placeholder(R.drawable.poster_placeholder)
-                .resize(154, 231)
-                .centerInside()
-                .into(imgPoster, object : Callback {
-                    override fun onSuccess() {
-                        if (startEnterTransition) {
-                            supportStartPostponedEnterTransition()
-                        }
+            .load(posterUrl)
+            .noFade()
+            .placeholder(R.drawable.poster_placeholder)
+            .resize(154, 231)
+            .centerInside()
+            .into(imgPoster, object : Callback {
+                override fun onSuccess() {
+                    if (startEnterTransition) {
+                        supportStartPostponedEnterTransition()
                     }
+                }
 
-                    override fun onError() {
-                        if (startEnterTransition) {
-                            supportStartPostponedEnterTransition()
-                        }
+                override fun onError() {
+                    if (startEnterTransition) {
+                        supportStartPostponedEnterTransition()
                     }
+                }
 
-                })
+            })
 
-        // Picasso doesnt execute the callback if posterUrl is null
+        // Picasso doesn't execute the callback if posterUrl is null
         if (posterUrl == null) {
             supportStartPostponedEnterTransition()
         }
@@ -185,5 +204,7 @@ class MovieDetailsActivity : AppCompatActivity(), IMovieDetailsView {
         const val EXTRA_MOVIE_ID = "MOVIE_ID"
         const val EXTRA_MOVIE_POSTER_TRANSITION_NAME = "MOVIE_POSTER_TRANSITION_NAME"
         const val EXTRA_MOVIE_POSTER_URL = "MOVIE_POSTER_URL"
+
+        val TAG = MovieDetailsActivity::class.java.canonicalName!!
     }
 }

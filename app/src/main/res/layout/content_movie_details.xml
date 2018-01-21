@@ -82,7 +82,7 @@
             android:id="@+id/tvAboutLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about_the_file"
+            android:text="@string/label_overview"
             android:textColor="@android:color/darker_gray"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -109,6 +109,7 @@
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a orci libero. Nulla sed eros ullamcorper, convallis nisl vel, posuere est. Vivamus egestas quis orci ut vulputate. Sed scelerisque nunc nulla, sit amet semper lorem rutrum id. Ut suscipit mollis gravida. Sed eu iaculis turpis. Praesent condimentum diam ut odio mattis consequat. Nunc eget sodales quam. Fusce blandit, mi quis vulputate semper, metus velit placerat velit, sed cursus odio turpis iaculis lectus."
             android:textColor="@color/lightGray"/>
 
-
     </android.support.constraint.ConstraintLayout>
+
+
 </android.support.v4.widget.NestedScrollView>

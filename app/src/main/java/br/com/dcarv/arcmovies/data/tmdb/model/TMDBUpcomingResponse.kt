@@ -1,7 +1,9 @@
 package br.com.dcarv.arcmovies.data.tmdb.model
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Represents upcoming movies list response returned by the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 data class TMDBUpcomingResponse(
         val page: Long,

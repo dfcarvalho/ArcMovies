@@ -1,7 +1,9 @@
 package br.com.dcarv.arcmovies.data.tmdb.model
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * Represents genres returned by the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 data class TMDBGenre(
         val id: Long,

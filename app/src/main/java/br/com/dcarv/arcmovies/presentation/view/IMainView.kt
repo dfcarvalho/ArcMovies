@@ -3,9 +3,11 @@ package br.com.dcarv.arcmovies.presentation.view
 import br.com.dcarv.arcmovies.domain.model.UpcomingMoviesList
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * A view for showing upcoming movies
+ *
+ * @author Danilo Carvalho
  */
 interface IMainView : IView {
-    fun onUpcomingMoviesListReady(upcomingMoviesList: UpcomingMoviesList)
+    fun onUpcomingMoviesListReady(upcomingMoviesList: UpcomingMoviesList, reset: Boolean = false)
     fun onUpcomingMoviesListError(page: Long, error: Throwable)
 }

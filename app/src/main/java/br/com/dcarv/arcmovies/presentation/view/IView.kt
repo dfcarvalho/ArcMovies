@@ -1,7 +1,6 @@
 package br.com.dcarv.arcmovies.presentation.view
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * An interface for all Views
  */
-interface IView {
-}
+interface IView

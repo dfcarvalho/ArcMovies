@@ -6,7 +6,7 @@ import com.squareup.picasso.Transformation
 
 
 /**
- * Created by dfcarvalho on 18/01/18.
+ * Adapted from: https://gist.github.com/kaushikgopal/aac4d0f9ed0d03cc0291
  */
 class VignetteTransformation(private val _type: TYPE) : Transformation {
 

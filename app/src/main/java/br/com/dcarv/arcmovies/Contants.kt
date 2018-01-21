@@ -1,7 +1,7 @@
 package br.com.dcarv.arcmovies
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * App constants
  */
 val TMDB_URL = "https://api.themoviedb.org/3/"
 val TMDB_API_KEY = "1f54bd990f1cdfb230adb312546d765d"

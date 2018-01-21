@@ -36,8 +36,8 @@ class TMDBUpcomingMoviesListProviderTest {
                                 overview = "Harry Potter descobre que é um bruxo.",
                                 posterPath = "https://image.tmdb.org/t/p/w154/some/path/to/image.png?api_key=1f54bd990f1cdfb230adb312546d765d",
                                 backdropPath = "https://image.tmdb.org/t/p/w780/another/path/to/image.png?api_key=1f54bd990f1cdfb230adb312546d765d",
-                                genres = listOf(Genre(id = 1, name = "Fantasia")),
-                                genreIds = null,
+                                genres = null,
+                                genreIds = listOf(1L),
                                 releaseDate = GregorianCalendar(2001, 10, 23).time
                         )),
                         maxDate = "2017-01-15",

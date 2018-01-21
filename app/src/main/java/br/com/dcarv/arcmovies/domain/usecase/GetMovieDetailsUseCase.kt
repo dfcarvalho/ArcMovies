@@ -5,7 +5,9 @@ import br.com.dcarv.arcmovies.domain.model.Movie
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Retrieves the Movie instance with movieId as ID
+ *
+ * @author Danilo Carvalho
  */
 class GetMovieDetailsUseCase(
         private val provider: IMovieDetailsProvider,

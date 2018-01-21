@@ -1,6 +1,8 @@
 package br.com.dcarv.arcmovies.data.tmdb.model
 
 /**
- * Created by dfcarvalho on 17/01/18.
+ * Represents countries or region returned by the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 data class TMDBGenresList(val genres: List<TMDBGenre>)

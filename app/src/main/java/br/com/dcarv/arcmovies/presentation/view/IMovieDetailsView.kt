@@ -3,7 +3,9 @@ package br.com.dcarv.arcmovies.presentation.view
 import br.com.dcarv.arcmovies.domain.model.Movie
 
 /**
- * Created by dfcarvalho on 17/01/18.
+ * A View for showing a movie's details
+ *
+ * @author Danilo Carvalho
  */
 interface IMovieDetailsView : IView {
     fun onMovieDetailsReady(movie: Movie)

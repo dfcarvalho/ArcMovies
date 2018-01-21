@@ -2,13 +2,17 @@ package br.com.dcarv.arcmovies.domain.usecase
 
 import br.com.dcarv.arcmovies.TMDB_BACKDROP_URL
 import br.com.dcarv.arcmovies.TMDB_POSTER_URL
+import br.com.dcarv.arcmovies.data.prefs.SharedPreferencesProvider
+import br.com.dcarv.arcmovies.domain.abstraction.IPreferencesProvider
 import br.com.dcarv.arcmovies.domain.abstraction.IUpcomingMoviesListProvider
 import br.com.dcarv.arcmovies.domain.model.Genre
 import br.com.dcarv.arcmovies.domain.model.UpcomingMoviesList
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Returns a paged list of upcoming movies
+ *
+ * @author Danilo Carvalho
  */
 class GetUpcomingMoviesListUseCase(
         private val provider: IUpcomingMoviesListProvider,

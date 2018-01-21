@@ -7,7 +7,9 @@ import br.com.dcarv.arcmovies.domain.model.UpcomingMoviesList
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * An implementation of IUpcomingMoviesListProvider that returns upcoming movies from the TMDB API
+ *
+ * @author Danilo Carvalho
  */
 class TMDBUpcomingMoviesListProvider(
         private val apiKey: String,

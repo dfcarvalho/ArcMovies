@@ -1,7 +1,9 @@
 package br.com.dcarv.arcmovies.data.tmdb.model
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Represents dates returned by the TMDB API's get upcoming movies endpoint
+ *
+ * @author Danilo Carvalho
  */
 data class TMDBUpcomingDatesRange(
         val maximum: String?,

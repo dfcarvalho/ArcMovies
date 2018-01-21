@@ -1,16 +1,15 @@
 package br.com.dcarv.arcmovies.data.tmdb
 
-import br.com.dcarv.arcmovies.data.tmdb.model.TMDBGenre
-import br.com.dcarv.arcmovies.data.tmdb.model.TMDBGenresList
-import br.com.dcarv.arcmovies.data.tmdb.model.TMDBMovie
-import br.com.dcarv.arcmovies.data.tmdb.model.TMDBUpcomingResponse
+import br.com.dcarv.arcmovies.data.tmdb.model.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Retrofit interface for TMDB API
+ *
+ * @author Danilo Carvalho
  */
 interface TMDBService {
     @GET("movie/upcoming")
@@ -33,4 +32,19 @@ interface TMDBService {
             @Query("api_key") apiKey: String,
             @Query("language") language: String = "pt-BR"
     ): Observable<TMDBGenresList>
+
+    @GET("configuration/countries")
+    fun getCountries(
+        @Query("api_key") apiKey: String
+    ): Observable<List<TMDBCountry>>
+
+    @GET("configuration/languages")
+    fun getLanguages(
+        @Query("api_key") apiKey: String
+    ): Observable<List<TMDBLanguage>>
+
+    @GET("configuration/primary_translations")
+    fun getTranslations(
+        @Query("api_key") apiKey: String
+    ): Observable<List<String >>
 }

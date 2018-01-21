@@ -11,7 +11,10 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Maps {@link br.com.dcarv.arcmovies.data.tmdb.model.TMDBUpcomingResponse} to
+ * {@link br.com.dcarv.arcmovies.domain.model.UpcomingMoviesList}
+ *
+ * @author Danilo Carvalho
  */
 object TMDBUpcomingMoviesListMapper : IUpcomingMoviesListMapper<TMDBUpcomingResponse> {
     @SuppressLint("SimpleDateFormat")

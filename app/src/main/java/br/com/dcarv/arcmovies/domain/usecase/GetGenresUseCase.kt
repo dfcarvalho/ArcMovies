@@ -5,7 +5,10 @@ import br.com.dcarv.arcmovies.domain.model.Genre
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 16/01/18.
+ * Returns a map of genres where the key is an ID and the value is an instance of
+ * {@link br.com.dcarv.arcmovies.domain.model.Genre}
+ *
+ * @author Danilo Carvalho
  */
 class GetGenresUseCase(
         private val provider: IGenreProvider,

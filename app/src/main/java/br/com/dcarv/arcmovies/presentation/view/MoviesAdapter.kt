@@ -16,17 +16,16 @@ import kotlinx.android.synthetic.main.item_movie.view.*
 import java.text.SimpleDateFormat
 
 /**
- * Movies Adapter
- * Manages ViewHolders for the Upcoming Movies RecyclerVie
+ * Manages ViewHolders for the Upcoming Movies RecyclerView
  *
  * @author Danilo Carvalho
  */
 class MoviesAdapter(
-        initialMoviesList: List<Movie> = listOf(),
-        private val onLoadMore: (() -> Boolean)? = null,
-        private val onMovieClicked: ((Movie, AppCompatImageView?) -> Unit)? = null,
-        var loading: Boolean = true,
-        private var hasMore: Boolean = true
+    initialMoviesList: List<Movie> = listOf(),
+    private val onLoadMore: (() -> Boolean)? = null,
+    private val onMovieClicked: ((Movie, AppCompatImageView?) -> Unit)? = null,
+    var loading: Boolean = true,
+    private var hasMore: Boolean = true
 ) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     // List of movies to be shown
     private val moviesList: MutableList<Movie> = initialMoviesList.toMutableList()
@@ -59,7 +58,8 @@ class MoviesAdapter(
 
             val filteredList = moviesList.filter {
                 noConstraint || it.title.toLowerCase().contains(
-                        text?.toString()?.toLowerCase() ?: "")
+                    text?.toString()?.toLowerCase() ?: ""
+                )
             }
 
             val result = Filter.FilterResults()
@@ -83,11 +83,13 @@ class MoviesAdapter(
 //        sortedMoviesList.addAll(initialMoviesList)
 //    }
 
-    override fun getItemCount() = if (hasMore) filteredMoviesList.size + 1 else filteredMoviesList.size
+    override fun getItemCount() =
+        if (hasMore) filteredMoviesList.size + 1 else filteredMoviesList.size
     // TODO: keep items ordered?
 //    override fun getItemCount() = if (hasMore) sortedMoviesList.size() + 1 else sortedMoviesList.size()
 
-    override fun getItemViewType(position: Int) = if (position == filteredMoviesList.size) VH_MORE else VH_MOVIE
+    override fun getItemViewType(position: Int) =
+        if (position == filteredMoviesList.size) VH_MORE else VH_MOVIE
     // TODO: keep items ordered?
 //    override fun getItemViewType(position: Int) = if (position == sortedMoviesList.size()) VH_MORE else VH_MOVIE
 
@@ -154,9 +156,9 @@ class MoviesAdapter(
 
     private fun loadImage(holder: MovieViewHolder, movie: Movie) {
         Picasso.with(holder.itemView.context)
-                .load(movie.posterPath)
-                .placeholder(R.drawable.poster_placeholder)
-                .into(holder.itemView.imgPoster)
+            .load(movie.posterPath)
+            .placeholder(R.drawable.poster_placeholder)
+            .into(holder.itemView.imgPoster)
     }
 
     private fun bindMoreViewHolder(holder: MoreViewHolder) {
@@ -180,6 +182,13 @@ class MoviesAdapter(
         notifyItemChanged(filteredMoviesList.size)
         // TODO: keep items ordered?
 //        notifyItemChanged(sortedMoviesList.size())
+    }
+
+    fun reset(upcomingMoviesList: UpcomingMoviesList) {
+        moviesList.clear()
+        notifyDataSetChanged()
+        this.addMovies(upcomingMoviesList)
+
     }
 
     fun addMovies(upcomingMoviesList: UpcomingMoviesList) {

@@ -4,7 +4,7 @@ import br.com.dcarv.arcmovies.domain.model.Movie
 import io.reactivex.Observable
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * @author Danilo Carvalho
  */
 interface IMovieDetailsProvider {
     fun getMovieDetails(movieId: Long, language: String = "pt-BR"): Observable<Movie>

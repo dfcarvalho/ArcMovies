@@ -9,7 +9,10 @@ import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Abstract class used as base for all UseCases in app.
+ * Children must implement the createObservable() method
+ *
+ * @author Danilo Carvalho
  */
 abstract class IUseCase<T> {
     private var subscription: Disposable = Disposables.empty()

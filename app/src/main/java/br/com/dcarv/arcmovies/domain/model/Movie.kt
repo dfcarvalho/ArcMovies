@@ -3,7 +3,9 @@ package br.com.dcarv.arcmovies.domain.model
 import java.util.*
 
 /**
- * Created by dfcarvalho on 15/01/18.
+ * Represents movies in the app
+ *
+ * @author Danilo Carvalho
  */
 data class Movie(
         val id: Long,

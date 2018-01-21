@@ -1,9 +1,25 @@
 <resources>
     <string name="app_name">ArcMovies</string>
-    <string name="no_movies_found">No movies found</string>
-    <string name="show_more">Show More</string>
-    <string name="title_activity_movie_details">Details</string>
-    <string name="about_the_file">Overview</string>
-    <string name="no_overview">There\'s no overview for this film</string>
+
+    <!-- Upcoming Movies -->
+    <string name="action_show_more">Show More</string>
+    <string name="action_region">Region Settings</string>
     <string name="action_search">Search</string>
+    <string name="label_no_movies_found">No movies found</string>
+    <string name="error_upcoming_movies">Failed to find movies!</string>
+
+    <!-- Movie Details -->
+    <string name="title_activity_movie_details">Details</string>
+    <string name="label_overview">Overview</string>
+    <string name="label_no_overview">There\'s no overview for this film</string>
+
+    <!-- Region Settings -->
+    <string name="title_region_settings">Region Settings</string>
+    <string name="label_country">Country</string>
+    <string name="label_language">Language</string>
+
+    <!-- Error -->
+    <string name="label_wait">Wait...</string>
+    <string name="label_try_again">Try again</string>
+    <string name="error_failed_movie_details">Failed to load movie details</string>
 </resources>
